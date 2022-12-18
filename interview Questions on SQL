@@ -1,0 +1,44 @@
+
+
+
+INTERVIEW QUESTION ASSIGNMENT
+—------------------------------------------------------------------------------------------------------------------
+
+1.	What is difference between truncate,delete and drop
+a.	Truncate: 
+1.	Truncate is used for deleting structure
+2.	We can not use where clause with truncate
+3.	Truncate is not row oriented function and we can roll back it
+
+b.	Delete:
+1.	Delete is row oriented command which can be rollback
+2.	With delete we can use where clause 
+ 
+c.	Drop:
+1.	Drop is table related command 
+2.	It cannot be roll back
+
+2.	What are  aliases in MySql?
+Alias is temporary name given to the table or column of table
+
+
+Note: I am My table called Marksheet
+3.	How do you display even rows of any table?
+select * from marks where prn % 2 = 0; 
+ 
+
+select * from (select name, row_number() over(order by percentage desc) as row_numbers from marksheet) as temp where row_numbers % 2=0;
+ 
+4.	How can you remove duplicates from table
+ select distinct(total) from marksheet;
+ 
+select name, row_number() over(order by total desc )as rowno from marksheet; //by assigning row number to each column
+ 
+
+5.	How can you find 5th max total?
+select name,total from marksheet order by total desc limit 5,1;
+ 
+select * from (select name, dense_rank() over(order by percentage desc) as total from marksheet) as temp where total =5;
+ 
+select * from marksheet m1 where 4 = (select count(distinct total) from marksheet m2 where m2.total>m1.total);
+ 
